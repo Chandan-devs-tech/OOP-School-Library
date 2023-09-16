@@ -22,7 +22,7 @@ class App
       if person.instance_of?(Student)
         puts "[Student], ID: #{person.id}, Name: #{person.name}, age: #{person.age}"
       else
-        puts "[Teacher], ID: #{person.id}, Name: #{person.name}, age: #{person.age}"
+        "[Teacher], ID: #{person.id}, Name: #{person.name}, age: #{person.age}"
       end
     end
   end
