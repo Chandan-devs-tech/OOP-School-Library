@@ -88,7 +88,10 @@ sh
 - Twitter: [@twitterhandle](https://twitter.com/ChandanGuptaDev)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/chandangupta-devs)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+👤 Melkamu Alemawu
+
+- GitHub: [@melkamu12](https://github.com/melkamu12)
+- LinkedIn: [melkamu-almawu](https://www.linkedin.com/in/melkamu-almawu/)
 
 <!-- FUTURE FEATURES -->
 

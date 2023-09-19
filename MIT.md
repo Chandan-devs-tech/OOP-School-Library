@@ -1,4 +1,4 @@
-## Copyright 2023, [Chandan Gupta]
+## Copyright 2023, [Chandan Gupta and Melkamu Alemawu] 
 
 ###### Please delete this line and the next one
 ###### APP TYPE can be a webpage/website, a web app, a software and so on
