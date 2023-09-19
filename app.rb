@@ -11,7 +11,12 @@ class App
     @rentals = []
   end
 
-  # write code here
+  def run
+    puts '------------------------------'
+    puts 'Welcome to School Library App!'
+    puts '------------------------------'
+    display_menu
+  end
 
   def display_menu
     loop do

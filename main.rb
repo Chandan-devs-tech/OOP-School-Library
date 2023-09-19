@@ -1,7 +1,7 @@
 require_relative 'app'
 
 def main
-  App.new
+  app = App.new
+  app.run
 end
-
 main
