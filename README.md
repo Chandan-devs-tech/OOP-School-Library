@@ -38,8 +38,10 @@
 ### Key Features <a name="key-features"></a>
 
 - [ ] [Add new students or teachers.]
-- [ ] [Add new books.]
+- [ ] [Add new books]
 - [ ] [Save records of who borrowed a given book and when.]
+- [ ] [Having a basic UI]
+- [ ] [preserves data]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -97,11 +99,7 @@ sh
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] [add basic UI]
-- [ ] [refactor your code]
-- [ ] [preserve data]
 - [ ] [unit tests]
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
