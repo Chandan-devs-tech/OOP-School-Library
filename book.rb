@@ -10,7 +10,7 @@ class Book
   def add_rentals(date, person)
     @rentals.push(Rental.new(date, self, person)) unless @rentals.include? Rental.new(date, self, person)
   end
-  
+
   def to_json(options = {})
     {
       title: @title,
