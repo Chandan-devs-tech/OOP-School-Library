@@ -1,3 +1,4 @@
+require 'json'
 require_relative 'book'
 require_relative 'person'
 require_relative 'student'
@@ -9,6 +10,7 @@ class App
     @people = []
     @books = []
     @rentals = []
+    load_data
   end
 
   def run
@@ -31,6 +33,7 @@ class App
 
       option = gets.chomp.to_i
       if option == 7
+        save_data
         puts 'Thank you for using this app!'
         break
       else
@@ -68,7 +71,7 @@ class App
     @people.each do |person|
       if person.instance_of?(Student)
         puts "[Student], ID: #{person.id}, Name: #{person.name}, age: #{person.age}"
-      else
+      elsif person.instance_of?(Teacher)
         puts "[Teacher], ID: #{person.id}, Name: #{person.name}, age: #{person.age}"
       end
     end
@@ -129,16 +132,30 @@ class App
     book_idx = gets.chomp.to_i
 
     puts 'Select a person from the following list by number (not id)'
+    # @people.each_with_index do |person, index|
+      # puts "#{index}) Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+    # end
     @people.each_with_index do |person, index|
-      puts "#{index}) Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      if person.instance_of?(Student)
+        puts "[student] #{index}) Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      elsif person.instance_of?(Teacher)
+        puts "[teacher] #{index}) Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      end
     end
     person_idx = gets.chomp.to_i
 
     print 'Date: '
     rental_date = gets.chomp
 
-    rental = Rental.new(rental_date, @books[book_idx], @people[person_idx])
-    @rentals << rental
+    # rental = Rental.new(rental_date, @books[book_idx], @people[person_idx])
+    # @rentals << rental
+    rental_data = {
+      'date' => date,
+      'book_title' => @books[book_idx].title,
+      'person_name' => @people[person_idx].name,
+      'person_id' => @people[person_idx].id
+      }
+    @rentals << rental_data
     puts 'Rental created successfully'
   end
 
@@ -147,7 +164,93 @@ class App
     id = gets.chomp
     puts 'Rental: '
     @rentals.each do |rental|
-      puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" if rental.person.id == id
+      # puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" if rental.person.id == id
+      if rental['person_id'] == id
+        puts "Date: #{rental['date']}, Book \"#{rental['book_title']}\" by #{rental['person_name']}"
+      end
+    end
+  end
+
+  # Method for preserving and loading the data
+
+  def save_data
+    save_books
+    save_people
+    save_rentals
+  end
+
+  def load_data
+    load_books
+    load_people
+    load_rentals
+  end
+
+  # Saving and Loading Books
+
+  # Saving and Loading People
+
+  def save_people
+    people_data = []
+    @people.each do |person|
+      if person.is_a?(Student)
+        people_data << {
+          'id' => person.id,
+          'type' => 'Student',
+          'age' => person.age,
+          'parent_permission' => person.parent_permission,
+          'name' => person.name
+        }
+      elsif person.is_a?(Teacher)
+        people_data << {
+          'id' => person.id,
+          'type' => 'Teacher',
+          'age' => person.age,
+          'specialization' => person.specialization,
+          'name' => person.name
+        }
+      end
+    end
+    File.open('data/people.json', 'w') do |file|
+      file.write(JSON.generate(people_data))
+    end
+  end
+
+  def load_people
+    if File.exist?('data/people.json')
+      people_data = JSON.parse(File.read('data/people.json'))
+      @people = people_data.map do |person_hash|
+        if person_hash['type'] == 'Student'
+          Student.new(person_hash['age'], person_hash['parent_permission'], person_hash['name'])
+        elsif person_hash['type'] == 'Teacher'
+          Teacher.new(person_hash['age'], person_hash['specialization'], person_hash['name'])
+        end
+      end
+    else
+      @people = []
+    end
+  end
+
+  # Saving and loading Rentals
+
+  def save_rentals
+    # rental_data = @rentals.map do |rental|
+    #   {
+    #     'date' => rental.date,
+    #     'book_title' => rental.book.title,
+    #     'person_name' => rental.person.name,
+    #     'person_id' => rental.person.id
+    #   }
+    # end
+    File.open('data/rentals.json', 'w') do |file|
+      file.write(JSON.generate(@rentals))
+    end
+  end
+
+  def load_rentals
+    if File.exist?('data/rentals.json')
+      @rentals = JSON.parse(File.read('data/rentals.json'))
+    else 
+      @rentals = []
     end
   end
 end
